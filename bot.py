@@ -1,3 +1,13 @@
+import sys
+import types
+
+if 'imghdr' not in sys.modules:
+    fake = types.ModuleType("imghdr")
+    def what(file=None, h=None):
+        return None
+    fake.what = what
+    sys.modules['imghdr'] = fake
+
 import requests
 import os
 import sqlite3
