@@ -69,31 +69,31 @@ def get_from_cache(number):
 # --- Core Bot Functions ---
 def start(update, context):
     update.message.reply_text(
-        "👋 Hi! Send me any phone number with country code (e.g., +919876543210)\n"
+        "Hi! Send me any phone number with country code (e.g., +919876543210)\n"
         "I'll find name, spam score, and network details.\n"
-        "⚡ Cached results for faster responses!"
+        "Cached results for faster responses!"
     )
 
 def lookup(update, context):
     number = update.message.text.strip()
     if not number.startswith("+"):
-        update.message.reply_text("⚠️ Please include the country code, like +91.")
+        update.message.reply_text("Please include the country code, like +91.")
         return
 
     # Check cache first
     cached = get_from_cache(number)
     if cached:
         info = (
-            f"📞 *Phone Lookup (Cached)*\n"
+            f"*Phone Lookup (Cached)*\n"
             f"━━━━━━━━━━━━━━━\n"
-            f"👤 *Name:* {cached['name']}\n"
-            f"📱 *Number:* {cached['number']}\n"
-            f"🌍 *Country:* {cached['country']}\n"
-            f"📡 *Carrier:* {cached['carrier']}\n"
-            f"🔌 *Line Type:* {cached['line_type']}\n"
-            f"🧠 *Spam Score:* {cached['spam_score']}\n"
-            f"✅ *Active:* {cached['active']}\n"
-            f"🕓 *Checked:* {cached['last_checked']}"
+            f"*Name:* {cached['name']}\n"
+            f"*Number:* {cached['number']}\n"
+            f"*Country:* {cached['country']}\n"
+            f"*Carrier:* {cached['carrier']}\n"
+            f"*Line Type:* {cached['line_type']}\n"
+            f"*Spam Score:* {cached['spam_score']}\n"
+            f"*Active:* {cached['active']}\n"
+            f"*Checked:* {cached['last_checked']}"
         )
         update.message.reply_text(info, parse_mode="Markdown")
         return
@@ -103,11 +103,11 @@ def lookup(update, context):
         r = requests.get(f"https://api.numlookupapi.com/v1/validate/{number}?apikey={API_KEY}")
         base = r.json()
     except Exception:
-        update.message.reply_text("❌ Error contacting lookup service.")
+        update.message.reply_text("Error contacting lookup service.")
         return
 
     if not base.get("valid"):
-        update.message.reply_text("❌ Invalid or unrecognized number.")
+        update.message.reply_text("Invalid or unrecognized number.")
         return
 
     # Get name
@@ -147,22 +147,22 @@ def lookup(update, context):
 
     # Format reply
     info = (
-        f"📞 *Phone Lookup Result*\n"
+        f"*Phone Lookup Result*\n"
         f"━━━━━━━━━━━━━━━\n"
-        f"👤 *Name:* {name}\n"
-        f"📱 *Number:* {info_dict['number']}\n"
-        f"🌍 *Country:* {info_dict['country']}\n"
-        f"📡 *Carrier:* {info_dict['carrier']}\n"
-        f"🔌 *Line Type:* {info_dict['line_type']}\n"
-        f"🧠 *Spam Score:* {spam_score}\n"
-        f"✅ *Active:* {info_dict['active']}"
+        f"*Name:* {name}\n"
+        f"*Number:* {info_dict['number']}\n"
+        f"*Country:* {info_dict['country']}\n"
+        f"*Carrier:* {info_dict['carrier']}\n"
+        f"*Line Type:* {info_dict['line_type']}\n"
+        f"*Spam Score:* {spam_score}\n"
+        f"*Active:* {info_dict['active']}"
     )
 
     update.message.reply_text(info, parse_mode="Markdown")
 
 def help_command(update, context):
     update.message.reply_text(
-        "ℹ️ Just send any phone number in full international format (like +12025550123).\n"
+        "Just send any phone number in full international format (like +12025550123).\n"
         "Cached results will reply faster!"
     )
 
